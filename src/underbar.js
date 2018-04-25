@@ -300,7 +300,24 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var results = {};
+    var newArgs = [...arguments];
+    for (var args of newArgs) {
+      return function(items) {    
+        if (results[items + [...arguments]]) {
+          return results[items + [...arguments]];
+        } else {
+          results[items + [...arguments]] = func.apply(this, arguments);    
+          return results[items + [...arguments]];
+        }
+      };
+    }
   };
+ 
+
+
+
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -309,8 +326,8 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    return setTimeout(...arguments);
   };
-
 
   /**
    * ADVANCED COLLECTION OPERATIONS
@@ -323,6 +340,9 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var shuffled = array.slice(0).sort();
+    return shuffled;
+    
   };
 
 
